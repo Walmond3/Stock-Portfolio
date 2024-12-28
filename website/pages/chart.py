@@ -57,68 +57,68 @@ def app():
       
       elif indicator == 'Volatility Indicators':
   
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'ATR'], mode='lines', name='Average True Range'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'ATR'], mode='lines', name='Average True Range'),
                     row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'RVI'], mode='lines', name='Relative Volatility Index'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'RVI'], mode='lines', name='Relative Volatility Index'),
                       row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'True Range'], mode='lines', name='True Range'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'True Range'], mode='lines', name='True Range'),
                       row=2, col=1)
       
       elif indicator == 'RSI':
   
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'RSI'], mode='lines', name='Relative Strength Index'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'RSI'], mode='lines', name='Relative Strength Index'),
                     row=2, col=1)
       
       elif indicator == 'Bollinger Bands':
   
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'BBL_14_2.0'], mode='lines', name='Lower Bollinger Bands'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'BBL_14_2.0'], mode='lines', name='Lower Bollinger Bands'),
                     row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'BBM_14_2.0'], mode='lines', name='Mid Bollinger Bands'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'BBM_14_2.0'], mode='lines', name='Mid Bollinger Bands'),
                       row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'BBU_14_2.0'], mode='lines', name='Upper Bollinger Bands'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'BBU_14_2.0'], mode='lines', name='Upper Bollinger Bands'),
                       row=2, col=1)
         
       elif indicator == 'Average Directional Movement Index':
   
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'ADX_14'], mode='lines', name='Average Directional Index'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'ADX_14'], mode='lines', name='Average Directional Index'),
                     row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'DMN_14'], mode='lines', name='Directional Movement Minus'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'DMN_14'], mode='lines', name='Directional Movement Minus'),
                       row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'DMP_14'], mode='lines', name='Directional Movement Plus'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'DMP_14'], mode='lines', name='Directional Movement Plus'),
                       row=2, col=1)
         
       elif indicator == 'Aroon & Aroon Oscillator':
   
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'AROONU_14'], mode='lines', name='Aroon Up'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'AROONU_14'], mode='lines', name='Aroon Up'),
                       row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'AROOND_14'], mode='lines', name='Aroon Down'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'AROOND_14'], mode='lines', name='Aroon Down'),
                       row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'AROONOSC_14'], mode='lines', name='Aroon Oscillator'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'AROONOSC_14'], mode='lines', name='Aroon Oscillator'),
                       row=2, col=1)
         
       elif indicator == 'Overlap Indicators':
   
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'EMA'], mode='lines', name='Exponential Moving Average'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'EMA'], mode='lines', name='Exponential Moving Average'),
                 row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'SMA'], mode='lines', name='Simple Moving Average'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'SMA'], mode='lines', name='Simple Moving Average'),
                       row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'WMA'], mode='lines', name='Weighted Moving Average'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'WMA'], mode='lines', name='Weighted Moving Average'),
                       row=2, col=1)
         
       elif indicator == 'KDJ':
   
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'K_14_3'], mode='lines', name='Fast %K'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'K_14_3'], mode='lines', name='Fast %K'),
                       row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'D_14_3'], mode='lines', name='Slow %D'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'D_14_3'], mode='lines', name='Slow %D'),
                       row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'J_14_3'], mode='lines', name='J'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'J_14_3'], mode='lines', name='J'),
                       row=2, col=1)
   
       elif indicator == 'Moving Average Convergence Divergence':
   
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'MACD_12_26_9'], mode='lines', name='Moving Average Convergence Divergence'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'MACD_12_26_9'], mode='lines', name='Moving Average Convergence Divergence'),
                       row=2, col=1)
-        fig.add_trace(go.Scatter(x=final_df[ticker].index, y=final_df[ticker, 'MACDs_12_26_9'], mode='lines', name='Signal Line'),
+        fig.add_trace(go.Scatter(x=df[ticker].index, y=df[ticker, 'MACDs_12_26_9'], mode='lines', name='Signal Line'),
                       row=2, col=1)
 
   
