@@ -171,13 +171,14 @@ def app():
       st.header("Stock Chart Visualization")
   
       # Render the first chart (Chart 1)
-        fig1 = plot_chart(df, selected_stock_code_1, selected_indicator_1)
-        st.plotly_chart(fig1, use_container_width=True, key='chart_1')
+      fig1 = plot_chart(df, selected_stock_code_1, selected_indicator_1)
+      st.plotly_chart(fig1, use_container_width=True, key='chart_1')
 
-        # Render the second chart (Chart 2) if comparison is selected
-        if compare:
-            fig2 = plot_chart(df, selected_stock_code_2, selected_indicator_2)
-            st.plotly_chart(fig2, use_container_width=True, key='chart_2')
+      # Render the second chart (Chart 2) if comparison is selected
+      if compare:
+          fig2 = plot_chart(df, selected_stock_code_2, selected_indicator_2)
+          st.plotly_chart(fig2, use_container_width=True, key='chart_2')
+        
   else:
       st.warning("Please upload a CSV file to proceed.")
 
