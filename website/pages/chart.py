@@ -162,10 +162,10 @@ def app():
       if compare:
           st.header("Select Stock and Indicator for Chart 2")
           col3_input, col4_input = st.columns(2)
-          selected_stock_name_2 = col3_input.selectbox("Select Stock", list(stocks.keys()))
+          selected_stock_name_2 = col3_input.selectbox("Select Stock", list(stocks.keys()), key="stock_select_2")
           selected_stock_code_2 = stocks[selected_stock_name_2]
           selected_indicator_2 = col4_input.selectbox("Select Indicator", 
-                                                      ['Volume Indicators', 'Volatility Indicators', 'RSI', 'Bollinger Bands', 'Average Directional Movement Index', 'Aroon & Aroon Oscillator', 'Overlap Indicators', 'KDJ', 'Moving Average Convergence Divergence'])  # Add other indicators here
+                                                      ['Volume Indicators', 'Volatility Indicators', 'RSI', 'Bollinger Bands', 'Average Directional Movement Index', 'Aroon & Aroon Oscillator', 'Overlap Indicators', 'KDJ', 'Moving Average Convergence Divergence'], key="indicator_select_2")  # Add other indicators here
   
       # Main section for chart display
       st.header("Stock Chart Visualization")
