@@ -50,8 +50,21 @@ data = {
         ],
     }
 
+indicators = {
+        "Category": ['Volume', 'Volatility', 'Statistics', 'Overlap', 'Momentum', 'Return', 'Trend', 'Performance'],
+        "Indicator": [['On-Balance Volume', 'Accumulation/Distribution Index'],
+                      ['Average True Range', 'True Range', 'Relative Volatility Index', 'Bollinger Bands'],
+                      ['Kurtosis', 'Skew', 'Standard Deviation'],
+                      ['Exponential Moving Average', 'Simple Moving Average', 'Weighted Moving Average'],
+                      ['Relative Strength Index', 'KDJ', 'Moving Average Convergence Divergence'],
+                      ['Daily Return'],
+                      ['Average Directional Movement Index', 'Aroon & Aroon Oscillator'],
+                      ['Draw Down']]    
+}
+
 # Create a DataFrame
 stock_table = pd.DataFrame(data)
+indicator_table = pd.DataFrame(indicators)
 
 st.write(
         '''
@@ -68,3 +81,6 @@ st.write(
 # Display the table
 st.write("### List of Stocks")
 st.dataframe(stock_table, use_container_width=True)
+st.markdown("<br><br>", unsafe_allow_html=True)
+st.write("### List of Indicators")
+st.dataframe(indicator_table, use_container_width=True)
