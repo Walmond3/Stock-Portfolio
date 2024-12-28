@@ -135,22 +135,22 @@ def app():
                         template="plotly_dark")
       return fig
 
-    zip_url = "https://github.com/Walmond3/Stock-Portfolio/blob/5ad9c8ec2bdfaae33f0e439878d62b0bdfd7d628/stock_data.zip"
-    # Step 1: Download the ZIP file from GitHub
-    response = requests.get(zip_url)
-    response.raise_for_status()  # Check if the request was successful
+  zip_url = "https://github.com/Walmond3/Stock-Portfolio/blob/5ad9c8ec2bdfaae33f0e439878d62b0bdfd7d628/stock_data.zip"
+  # Step 1: Download the ZIP file from GitHub
+  response = requests.get(zip_url)
+  response.raise_for_status()  # Check if the request was successful
 
-    # Step 2: Open the ZIP file from the content
-    with zipfile.ZipFile(io.BytesIO(response.content)) as z:
-        # List files in the ZIP archive
-        zip_file_names = z.namelist()
-        st.write("ZIP File contains the following files:", zip_file_names)
-        
-        # Assuming there's only one CSV file in the ZIP archive, select the first file
-        csv_filename = zip_file_names[0]  # You can customize the filename if needed
-        with z.open(csv_filename) as f:
-            # Step 3: Read the CSV file into a pandas DataFrame
-            df = pd.read_csv(f, header=[0, 1], index_col=0, parse_dates=True)
+  # Step 2: Open the ZIP file from the content
+  with zipfile.ZipFile(io.BytesIO(response.content)) as z:
+      # List files in the ZIP archive
+      zip_file_names = z.namelist()
+      st.write("ZIP File contains the following files:", zip_file_names)
+      
+      # Assuming there's only one CSV file in the ZIP archive, select the first file
+      csv_filename = zip_file_names[0]  # You can customize the filename if needed
+      with z.open(csv_filename) as f:
+          # Step 3: Read the CSV file into a pandas DataFrame
+          df = pd.read_csv(f, header=[0, 1], index_col=0, parse_dates=True)
             
 
   
