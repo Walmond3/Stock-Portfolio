@@ -2,14 +2,14 @@ import streamlit as st
 
 st.title('My Data Product')
 
-page = st.sidebar.selectbox('Select a page', ['Overview', 'Chart', 'Prediction', 'Portfolio'])
+st.sidebar.title('Page')
 
-if page == 'Overview':
+if st.sidebar.button('Overview'):
   import pages.overview
-elif page == 'Chart':
+elif st.sidebar.button('Chart'):
   import pages.chart
-elif page == 'Prediction':
+elif st.sidebar.button('Prediction'):
   import pages.prediction
-elif page == 'Portfolio':
+elif st.sidebar.button('Portfolio'):
   import pages.portfolio
                                             
