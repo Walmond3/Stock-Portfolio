@@ -167,7 +167,13 @@ def app():
   
       # Main section for chart display
       st.header("Stock Chart Visualization")
-      col1, col2 = st.columns(2 if compare else 1)
+    
+      # If compare is False, there will only be one column, so unpack accordingly
+      if compare:
+          col1, col2 = columns
+      else:
+          col1 = columns[0]
+          # col2 doesn't exist if compare is False, so we don't need to define it
   
       # Render the first chart
       with col1:
