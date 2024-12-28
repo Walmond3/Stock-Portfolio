@@ -189,5 +189,5 @@ def app():
   else:
       st.warning("Please upload a CSV file to proceed.")
 
-if __name__ = "__main__":
+if __name__ == "__main__":
   app()
