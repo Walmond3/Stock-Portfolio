@@ -179,13 +179,13 @@ def app():
       # Render the first chart
       with col1:
           fig1 = plot_chart(df, selected_stock_code_1, selected_indicator_1)
-          st.plotly_chart(fig1, use_container_width=True)
+          st.plotly_chart(fig1, use_container_width=True, key="plotly_chart_1")
   
       # Render the second chart if comparison is selected
       if compare:
           with col2:
               fig2 = plot_chart(df, selected_stock_code_2, selected_indicator_2)
-              st.plotly_chart(fig2, use_container_width=True)
+              st.plotly_chart(fig2, use_container_width=True, key="plotly_chart_2")
   else:
       st.warning("Please upload a CSV file to proceed.")
 
