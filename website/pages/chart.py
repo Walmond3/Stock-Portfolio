@@ -140,6 +140,14 @@ def app():
   response = requests.get(zip_url)
   response.raise_for_status()  # Check if the request was successful
 
+
+  # Check if the content type is zip
+  if 'zip' in response.headers.get('Content-Type', ''):
+      print("It's a ZIP file!")
+  else:
+      print("This is not a ZIP file!")
+
+
   # Step 2: Open the ZIP file from the content
   with zipfile.ZipFile(io.BytesIO(response.content)) as z:
       # List files in the ZIP archive
