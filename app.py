@@ -50,9 +50,9 @@ data = {
         ],
     }
 
-    # Create a DataFrame
-    stock_table = pd.DataFrame(data)
+# Create a DataFrame
+stock_table = pd.DataFrame(data)
 
-    # Display the table
-    st.write("### List of Stocks")
-    st.dataframe(stock_table, use_container_width=True)
+# Display the table
+st.write("### List of Stocks")
+st.dataframe(stock_table, use_container_width=True)
