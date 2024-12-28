@@ -141,7 +141,7 @@ def app():
   # If a file is uploaded, read and display it
   if uploaded_file is not None:
       # Read the CSV file into a DataFrame
-      df = pd.read_csv(uploaded_file, header=[0, 1], parse_dates=True)
+      df = pd.read_csv(uploaded_file, header=[0, 1], index_col=0, parse_dates=True)
       # Display the DataFrame
       st.write('success')
       st.write("Data Columns:", df.columns)
