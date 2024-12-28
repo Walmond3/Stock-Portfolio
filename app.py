@@ -1,3 +1,3 @@
 import streamlit as st
 
-st.title('app')
+st.title('Stock Visionary')
