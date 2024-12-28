@@ -144,45 +144,82 @@ def app():
       df = pd.read_csv(uploaded_file)
       # Display the DataFrame
       st.write('success')
+
+      # Stock and indicator selection for first chart
+      st.header("Select Stock and Indicator for Chart 1")
+      col1_input, col2_input = st.columns(2)
+      selected_stock_name_1 = col1_input.selectbox("Select Stock", list(stocks.keys()))
+      selected_stock_code_1 = stocks[selected_stock_name_1]
+      selected_indicator_1 = col2_input.selectbox("Select Indicator", 
+                                                  ['Volume Indicators', 'Volatility Indicators', 'RSI', 'Bollinger Bands', 'Average Directional Movement Index', 'Aroon & Aroon Oscillator', 'Overlap Indicators', 'KDJ', 'Moving Average Convergence Divergence'])  # Add other indicators here
+  
+      # Comparison toggle
+      compare = st.checkbox("Compare with another chart?")
+  
+      # Inputs for second chart if comparison is enabled
+      if compare:
+          st.header("Select Stock and Indicator for Chart 2")
+          col3_input, col4_input = st.columns(2)
+          selected_stock_name_2 = col3_input.selectbox("Select Stock", list(stocks.keys()))
+          selected_stock_code_2 = stocks[selected_stock_name_2]
+          selected_indicator_2 = col4_input.selectbox("Select Indicator", 
+                                                      ['Volume Indicators', 'Volatility Indicators', 'RSI', 'Bollinger Bands', 'Average Directional Movement Index', 'Aroon & Aroon Oscillator', 'Overlap Indicators', 'KDJ', 'Moving Average Convergence Divergence'])  # Add other indicators here
+  
+      # Main section for chart display
+      st.header("Stock Chart Visualization")
+      col1, col2 = st.columns(2 if compare else 1)
+  
+      # Render the first chart
+      with col1:
+          fig1 = plot_chart(df, selected_stock_code_1, selected_indicator_1)
+          st.plotly_chart(fig1, use_container_width=True)
+  
+      # Render the second chart if comparison is selected
+      if compare:
+          with col2:
+              fig2 = plot_chart(df, selected_stock_code_2, selected_indicator_2)
+              st.plotly_chart(fig2, use_container_width=True)
+  else:
+      st.warning("Please upload a CSV file to proceed.")
             
 
   
-  st.title('Visualise Stock Performance')
+  # st.title('Visualise Stock Performance')
   
-  # Stock and indicator selection for first chart
-  st.header("Select Stock and Indicator for Chart 1")
-  col1_input, col2_input = st.columns(2)
-  selected_stock_name_1 = col1_input.selectbox("Select Stock", list(stocks.keys()))
-  selected_stock_code_1 = stocks[selected_stock_name_1]
-  selected_indicator_1 = col2_input.selectbox("Select Indicator", 
-                                              ['Volume Indicators', 'Volatility Indicators', 'RSI', 'Bollinger Bands', 'Average Directional Movement Index', 'Aroon & Aroon Oscillator', 'Overlap Indicators', 'KDJ', 'Moving Average Convergence Divergence'])
+  # # Stock and indicator selection for first chart
+  # st.header("Select Stock and Indicator for Chart 1")
+  # col1_input, col2_input = st.columns(2)
+  # selected_stock_name_1 = col1_input.selectbox("Select Stock", list(stocks.keys()))
+  # selected_stock_code_1 = stocks[selected_stock_name_1]
+  # selected_indicator_1 = col2_input.selectbox("Select Indicator", 
+  #                                             ['Volume Indicators', 'Volatility Indicators', 'RSI', 'Bollinger Bands', 'Average Directional Movement Index', 'Aroon & Aroon Oscillator', 'Overlap Indicators', 'KDJ', 'Moving Average Convergence Divergence'])
   
-  # Comparison toggle
-  compare = st.checkbox("Compare")
+  # # Comparison toggle
+  # compare = st.checkbox("Compare")
   
-  # Inputs for second chart if comparison is enabled
-  if compare:
-      st.header("Select Stock and Indicator for Chart 2")
-      col3_input, col4_input = st.columns(2)
-      selected_stock_name_2 = col3_input.selectbox("Select Stock", list(stocks.keys()))
-      selected_stock_code_2 = stocks[selected_stock_name_2]
-      selected_indicator_2 = col4_input.selectbox("Select Indicator", 
-                                                  ['Volume Indicators', 'Volatility Indicators', 'RSI', 'Bollinger Bands', 'Average Directional Movement Index', 'Aroon & Aroon Oscillator', 'Overlap Indicators', 'KDJ', 'Moving Average Convergence Divergence']) 
+  # # Inputs for second chart if comparison is enabled
+  # if compare:
+  #     st.header("Select Stock and Indicator for Chart 2")
+  #     col3_input, col4_input = st.columns(2)
+  #     selected_stock_name_2 = col3_input.selectbox("Select Stock", list(stocks.keys()))
+  #     selected_stock_code_2 = stocks[selected_stock_name_2]
+  #     selected_indicator_2 = col4_input.selectbox("Select Indicator", 
+  #                                                 ['Volume Indicators', 'Volatility Indicators', 'RSI', 'Bollinger Bands', 'Average Directional Movement Index', 'Aroon & Aroon Oscillator', 'Overlap Indicators', 'KDJ', 'Moving Average Convergence Divergence']) 
   
-  # Main section for chart display
-  st.header("Stock Chart Visualization")
-  col1, col2 = st.columns(2 if compare else 1)
+  # # Main section for chart display
+  # st.header("Stock Chart Visualization")
+  # col1, col2 = st.columns(2 if compare else 1)
   
-  # Render the first chart
-  with col1:
-      fig1 = plot_chart(df, selected_stock_code_1, selected_indicator_1)
-      st.plotly_chart(fig1, use_container_width=True)
+  # # Render the first chart
+  # with col1:
+  #     fig1 = plot_chart(df, selected_stock_code_1, selected_indicator_1)
+  #     st.plotly_chart(fig1, use_container_width=True)
   
-  # Render the second chart if comparison is selected
-  if compare:
-      with col2:
-          fig2 = plot_chart(df, selected_stock_code_2, selected_indicator_2)
-          st.plotly_chart(fig2, use_container_width=True)
+  # # Render the second chart if comparison is selected
+  # if compare:
+  #     with col2:
+  #         fig2 = plot_chart(df, selected_stock_code_2, selected_indicator_2)
+  #         st.plotly_chart(fig2, use_container_width=True)
 
 
 if __name__ == "__main__":
