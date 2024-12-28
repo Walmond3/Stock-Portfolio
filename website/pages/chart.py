@@ -188,3 +188,6 @@ def app():
               st.plotly_chart(fig2, use_container_width=True, key="plotly_chart_2")
   else:
       st.warning("Please upload a CSV file to proceed.")
+
+if __name__ = "__main__":
+  app()
