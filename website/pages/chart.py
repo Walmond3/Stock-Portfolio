@@ -129,8 +129,8 @@ def app():
                         xaxis=dict(type='date', rangeslider=dict(visible=False), tickformat='%Y-%m-%d', tickangle=45),
                         yaxis=dict(showgrid=True),
                         yaxis2=dict(showgrid=True),
-                        height=800,
-                        width=700,
+                        height=1000,
+                        width=900,
                         showlegend=True,
                         template="plotly_dark")
       return fig
@@ -144,8 +144,7 @@ def app():
       df = pd.read_csv(uploaded_file, header=[0, 1], index_col=0, parse_dates=True)
       # Display the DataFrame
       st.write('success')
-      st.write("Data Columns:", df.columns)
-      st.write("Data Preview:", df.head())
+
   
       # Stock and indicator selection for first chart
       st.header("Select Stock and Indicator for Chart 1")
