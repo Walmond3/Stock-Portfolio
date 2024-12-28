@@ -144,7 +144,7 @@ def app():
       df = pd.read_csv(uploaded_file)
       # Display the DataFrame
       st.write('success')
-
+  
       # Stock and indicator selection for first chart
       st.header("Select Stock and Indicator for Chart 1")
       col1_input, col2_input = st.columns(2)
@@ -167,14 +167,13 @@ def app():
   
       # Main section for chart display
       st.header("Stock Chart Visualization")
-    
-      # If compare is False, there will only be one column, so unpack accordingly
-      if compare:
-          col1, col2 = columns
-      else:
-          col1 = columns[0]
-          # col2 doesn't exist if compare is False, so we don't need to define it
   
+      # Define the columns based on whether compare is checked
+      if compare:
+          col1, col2 = st.columns(2)
+      else:
+          col1 = st.columns(1)[0]  # Single column when comparison is not selected
+      
       # Render the first chart
       with col1:
           fig1 = plot_chart(df, selected_stock_code_1, selected_indicator_1)
@@ -187,7 +186,7 @@ def app():
               st.plotly_chart(fig2, use_container_width=True)
   else:
       st.warning("Please upload a CSV file to proceed.")
-            
+
 
   
   # st.title('Visualise Stock Performance')
