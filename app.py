@@ -2,7 +2,7 @@ import streamlit as st
 
 st.title('My Data Product')
 
-page = st.sidebar.selectboc('Select a page', ['Overview', 'Chart', 'Prediction', 'Portfolio'])
+page = st.sidebar.selectbox('Select a page', ['Overview', 'Chart', 'Prediction', 'Portfolio'])
 
 if page == 'Overview':
   import pages.overview
