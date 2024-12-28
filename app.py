@@ -53,6 +53,18 @@ data = {
 # Create a DataFrame
 stock_table = pd.DataFrame(data)
 
+st.write(
+        '''
+        Welcome to Stock Visionary!
+        
+        Navigate to these sections:
+        1. chart: visualise stocks' performance and compare it
+        2. prediction: predict the stocks' return
+        3. portfolio: build your own portfolio
+        
+        Explore the list of stocks below to get started.
+        '''
+)
 # Display the table
 st.write("### List of Stocks")
 st.dataframe(stock_table, use_container_width=True)
