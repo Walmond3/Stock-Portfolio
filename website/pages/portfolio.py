@@ -99,36 +99,42 @@ def app():
     return optimal_weights_df, np.round(portfolio_return_value, 4), np.round(portfolio_risk_value, 4), np.round(portfolio_excess_return, 4), np.round(sharpe_ratio, 4), np.round(sortino_ratio, 4), np.round(max_drawdown, 4)
 
   def generate_pdf_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown):
-    pdf = FPDF()
-    pdf.set_auto_page_break(auto=True, margin=15)
-    pdf.add_page()
-    pdf.set_font("Arial", 'B', 16)
-    pdf.cell(200, 10, txt="Portfolio Optimization Report", ln=True, align="C")
-    pdf.ln(10)
+    try:
+        pdf = FPDF()
+        pdf.set_auto_page_break(auto=True, margin=15)
+        pdf.add_page()
+        pdf.set_font("Arial", 'B', 16)
+        pdf.cell(200, 10, txt="Portfolio Optimization Report", ln=True, align="C")
+        pdf.ln(10)
 
-    pdf.set_font("Arial", size=12)
-    pdf.cell(100, 10, txt="Portfolio Performance Metrics", ln=True)
-    pdf.ln(5)
+        pdf.set_font("Arial", size=12)
+        pdf.cell(100, 10, txt="Portfolio Performance Metrics", ln=True)
+        pdf.ln(5)
 
-    pdf.cell(200, 10, txt="Optimal Weights:", ln=True)
-    pdf.ln(5)
-    for index, row in optimal_weights_df.iterrows():
-      pdf.cell(200, 10, txt=f"{row['Stock']}: {row['Optimal Weights']}", ln=True)
-    pdf.ln(10)
+        pdf.cell(200, 10, txt="Optimal Weights:", ln=True)
+        pdf.ln(5)
+        for index, row in optimal_weights_df.iterrows():
+            pdf.cell(200, 10, txt=f"{row['Stock']}: {row['Optimal Weights']}", ln=True)
+        pdf.ln(10)
 
-    pdf.cell(200, 10, txt=f"Portfolio Return: {portfolio_return_value:.4f}", ln=True)
-    pdf.cell(200, 10, txt=f"Portfolio Risk: {portfolio_risk_value:.4f}", ln=True)
-    pdf.cell(200, 10, txt=f"Portfolio Excess Return: {portfolio_excess_return:.4f}", ln=True)
-    pdf.cell(200, 10, txt=f"Sharpe Ratio: {sharpe_ratio:.4f}", ln=True)
-    pdf.cell(200, 10, txt=f"Sortino Ratio: {sortino_ratio:.4f}", ln=True)
-    pdf.cell(200, 10, txt=f"Maximum Drawdown: {max_drawdown:.4f}", ln=True)
+        pdf.cell(200, 10, txt=f"Portfolio Return: {portfolio_return_value:.4f}", ln=True)
+        pdf.cell(200, 10, txt=f"Portfolio Risk: {portfolio_risk_value:.4f}", ln=True)
+        pdf.cell(200, 10, txt=f"Portfolio Excess Return: {portfolio_excess_return:.4f}", ln=True)
+        pdf.cell(200, 10, txt=f"Sharpe Ratio: {sharpe_ratio:.4f}", ln=True)
+        pdf.cell(200, 10, txt=f"Sortino Ratio: {sortino_ratio:.4f}", ln=True)
+        pdf.cell(200, 10, txt=f"Maximum Drawdown: {max_drawdown:.4f}", ln=True)
 
-    pdf_output = BytesIO()
-    pdf_content = pdf.output(dest='S').encode('latin1')
-    pdf_output.write(pdf_content)
-    pdf_output.seek(0)
-    
-    return pdf_output.getvalue()
+        pdf_output = BytesIO()
+        pdf_content = pdf.output(dest='S').encode('latin1')
+        pdf_output.write(pdf_content)
+        pdf_output.seek(0)
+
+        return pdf_output.getvalue()
+      
+    except Exception as e:
+        st.error(f"Error in PDF generation: {e}")
+        return None
+
     
   st.header('Portfolio Optimization')
 
@@ -170,16 +176,6 @@ def app():
       optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown = portfolio(
               df, selected_stocks, expected_returns, risk_free_rate_input, benchmark
           )
-
-      st.session_state['optimal_weights_df'] = optimal_weights_df
-      st.session_state['portfolio_metrics'] = {
-          'Return': portfolio_return_value,
-          'Risk': portfolio_risk_value,
-          'Excess Return': portfolio_excess_return,
-          'Sharpe': sharpe_ratio,
-          'Sortino': sortino_ratio,
-          'Max Drawdown': max_drawdown
-      }
       
       # Display results
       st.write("Optimal Weights:", optimal_weights_df)
@@ -192,24 +188,14 @@ def app():
   
       # Button to download the PDF report
       if st.button('Download PDF Report'):
-          if st.session_state['optimal_weights_df'] is not None:
-            metrics = st.session_state['portfolio_metrics']
-            pdf_data = generate_pdf_report(
-                st.session_state['optimal_weights_df'],
-                metrics['Return'],
-                metrics['Risk'],
-                metrics['Excess Return'],
-                metrics['Sharpe'],
-                metrics['Sortino'],
-                metrics['Max Drawdown']
-            )
-            st.download_button(
-                label="Download PDF",
-                data=pdf_data,
-                file_name="portfolio_report.pdf",
-                mime="application/pdf"
-            )
-            
+          pdf_data =  generate_pdf_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown)
+          st.download_button(
+              label="Download PDF",
+              data=pdf_data,
+              file_name="portfolio_report.pdf",
+              mime="application/pdf"
+          )
+          
 if __name__ == "__main__":
   app()
 
