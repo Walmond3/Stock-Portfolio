@@ -1,9 +1,6 @@
-# Define or import the generate_pdf_report function here
-
-from fpdf import FPDF
-import pandas as pd
 from io import BytesIO
-
+import pandas as pd
+from fpdf import FPDF
 
 def generate_pdf_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown):
     pdf = FPDF()
@@ -31,7 +28,8 @@ def generate_pdf_report(optimal_weights_df, portfolio_return_value, portfolio_ri
     pdf.cell(200, 10, txt=f"Maximum Drawdown: {max_drawdown:.4f}", ln=True)
 
     pdf_output = BytesIO()
-    pdf.output(pdf_output)
+    pdf_content = pdf.output(dest='S').encode('latin1')
+    pdf_output.write(pdf_content)
     pdf_output.seek(0)
 
     return pdf_output.getvalue()
