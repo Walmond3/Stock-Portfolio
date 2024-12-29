@@ -170,7 +170,17 @@ def app():
       optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown = portfolio(
               df, selected_stocks, expected_returns, risk_free_rate_input, benchmark
           )
-  
+
+      st.session_state['optimal_weights_df'] = optimal_weights_df
+      st.session_state['portfolio_metrics'] = {
+          'Return': portfolio_return_value,
+          'Risk': portfolio_risk_value,
+          'Excess Return': portfolio_excess_return,
+          'Sharpe': sharpe_ratio,
+          'Sortino': sortino_ratio,
+          'Max Drawdown': max_drawdown
+      }
+      
       # Display results
       st.write("Optimal Weights:", optimal_weights_df)
       st.write(f"Portfolio Return: {portfolio_return_value:.4f}")
@@ -182,14 +192,24 @@ def app():
   
       # Button to download the PDF report
       if st.button('Download PDF Report'):
-          pdf_data = generate_pdf_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown)
-          st.download_button(
-            label="Download PDF",
-            data=pdf_data,
-            file_name="portfolio_report.pdf",
-            mime="application/pdf"
-          )
-
+          if st.session_state['optimal_weights_df'] is not None:
+            metrics = st.session_state['portfolio_metrics']
+            pdf_data = generate_pdf_report(
+                st.session_state['optimal_weights_df'],
+                metrics['Return'],
+                metrics['Risk'],
+                metrics['Excess Return'],
+                metrics['Sharpe'],
+                metrics['Sortino'],
+                metrics['Max Drawdown']
+            )
+            st.download_button(
+                label="Download PDF",
+                data=pdf_data,
+                file_name="portfolio_report.pdf",
+                mime="application/pdf"
+            )
+            
 if __name__ == "__main__":
   app()
 
