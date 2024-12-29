@@ -56,26 +56,26 @@ def app():
         'Predicted Future Return': predicted_return[0][0]
       })
 
-      prediction_df = pd.DataFrame(predictions)
+    prediction_df = pd.DataFrame(predictions)
 
-      if not prediction_df.empty:
-        # Sort in descending
-        prediction_df = prediction_df.sort_values(by='Predicted Future Return', ascending=False)
+    if not prediction_df.empty:
+      # Sort in descending
+      prediction_df = prediction_df.sort_values(by='Predicted Future Return', ascending=False)
 
-        # Display the predictions
-        st.subheader("Predictions")
-        st.dataframe(prediction_df)
+      # Display the predictions
+      st.subheader("Predictions")
+      st.dataframe(prediction_df)
 
-        # Download the prediction results
-        csv = prediction_df.to_csv(index=False)
-        st.download_button(
-          label='Download Predictions as CSV',
-          data=csv,
-          file_name='predicted_returns.csv',
-          mime='text/csv'
-        )
-      else:
-        st.warning("No valid predictions were made. Check your data.")
+      # Download the prediction results
+      csv = prediction_df.to_csv(index=False)
+      st.download_button(
+        label='Download Predictions as CSV',
+        data=csv,
+        file_name='predicted_returns.csv',
+        mime='text/csv'
+      )
+    else:
+      st.warning("No valid predictions were made. Check your data.")
 
 if __name__ == "__main__":
   app()
