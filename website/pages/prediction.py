@@ -42,7 +42,7 @@ def app():
 
       # Normalized the features
       scaled_features = scaler.fit_transform(stock_data)
-      y_scaled = scaler.fit_transform(y.values.reshape(-1,1)
+      y_scaled = scaler.fit_transform(y.values.reshape(-1,1))
 
       sequence = create_sequences(scaled_features, time_step=20)
       sequence = sequence[-1]
