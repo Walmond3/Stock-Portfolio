@@ -89,7 +89,7 @@ def app():
     portfolio_returns = np.dot(monthly_returns, optimal_weights)
     negative_returns = portfolio_returns[portfolio_returns < 0]
     downside_risk = np.std(negative_returns)
-    sortino_ratio = portfolio_exccess_return / downside_risk
+    sortino_ratio = portfolio_excess_return / downside_risk
   
     cumultaive_returns = np.cumsum(portfolio_returns)
     peaks = np.maximum.accumulate(cumulative_returns)
