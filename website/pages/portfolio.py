@@ -126,6 +126,10 @@ def app():
     pdf_output = BytesIO()
     pdf.output(pdf_output)
     pdf_output.seek(0)
+
+    # Check PDF content (debugging step)
+    print("PDF Content Length:", len(pdf_output.getvalue()))
+    
     return pdf_output.getvalue()
     
   st.header('Portfolio Optimization')
