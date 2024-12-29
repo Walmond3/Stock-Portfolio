@@ -126,7 +126,7 @@ def app():
     pdf_output = BytesIO()
     pdf.output(pdf_output)
     pdf_output.seek(0)
-    return pdf_output.read()
+    return pdf_output.getvalue()
     
   st.header('Portfolio Optimization')
 
@@ -180,9 +180,8 @@ def app():
   
       # Button to download the PDF report
       if st.button('Download PDF Report'):
-          pdf = generate_pdf_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, 
-                                     portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown)
-          st.download_button("Download PDF", pdf, file_name="portfolio_report.pdf", mime="application/pdf")
+          pdf_data = generate_pdf_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown)
+          st.download_button("Download PDF", pdf_data, file_name="portfolio_report.pdf", mime="application/pdf")
     
   
 
