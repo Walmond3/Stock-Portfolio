@@ -1,3 +1,4 @@
+import streamlit as st
 from io import BytesIO
 import pandas as pd
 from fpdf import FPDF
