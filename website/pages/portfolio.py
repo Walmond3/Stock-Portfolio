@@ -3,7 +3,8 @@ from scipy.optimize import minimize
 import pandas as pd
 import numpy as np
 from sklearn.covariance import EmpiricalCovariance
-from io import StringIO
+from io import BytesIO
+from fpdf import FPDF
 
 def app():
 
@@ -97,20 +98,42 @@ def app():
 
         return optimal_weights_df, np.round(portfolio_return_value, 4), np.round(portfolio_risk_value, 4), np.round(portfolio_excess_return, 4), np.round(sharpe_ratio, 4), np.round(sortino_ratio, 4), np.round(max_drawdown, 4)
 
-    def generate_text_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown):
-        report = []
-        report.append("Portfolio Optimization Report\n")
-        report.append("\nOptimal Weights:\n")
-        for index, row in optimal_weights_df.iterrows():
-            report.append(f"{row['Stock']}: {row['Optimal Weights']:.2f}\n")
-        report.append("\nPortfolio Performance Metrics:\n")
-        report.append(f"Portfolio Return: {portfolio_return_value:.4f}\n")
-        report.append(f"Portfolio Risk: {portfolio_risk_value:.4f}\n")
-        report.append(f"Portfolio Excess Return: {portfolio_excess_return:.4f}\n")
-        report.append(f"Sharpe Ratio: {sharpe_ratio:.4f}\n")
-        report.append(f"Sortino Ratio: {sortino_ratio:.4f}\n")
-        report.append(f"Maximum Drawdown: {max_drawdown:.4f}\n")
-        return "".join(report)
+    def generate_pdf_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown):
+        try:
+            pdf = FPDF()
+            pdf.set_auto_page_break(auto=True, margin=15)
+            pdf.add_page()
+            pdf.set_font("Arial", 'B', 16)
+            pdf.cell(200, 10, txt="Portfolio Optimization Report", ln=True, align="C")
+            pdf.ln(10)
+
+            pdf.set_font("Arial", size=12)
+            pdf.cell(100, 10, txt="Portfolio Performance Metrics", ln=True)
+            pdf.ln(5)
+
+            pdf.cell(200, 10, txt="Optimal Weights:", ln=True)
+            pdf.ln(5)
+            for index, row in optimal_weights_df.iterrows():
+                pdf.cell(200, 10, txt=f"{row['Stock']}: {row['Optimal Weights']:.2f}", ln=True)
+            pdf.ln(10)
+
+            pdf.cell(200, 10, txt=f"Portfolio Return: {portfolio_return_value:.4f}", ln=True)
+            pdf.cell(200, 10, txt=f"Portfolio Risk: {portfolio_risk_value:.4f}", ln=True)
+            pdf.cell(200, 10, txt=f"Portfolio Excess Return: {portfolio_excess_return:.4f}", ln=True)
+            pdf.cell(200, 10, txt=f"Sharpe Ratio: {sharpe_ratio:.4f}", ln=True)
+            pdf.cell(200, 10, txt=f"Sortino Ratio: {sortino_ratio:.4f}", ln=True)
+            pdf.cell(200, 10, txt=f"Maximum Drawdown: {max_drawdown:.4f}", ln=True)
+
+            # Save PDF to BytesIO object
+            pdf_output = BytesIO()
+            pdf.output(pdf_output)
+            pdf_output.seek(0)
+
+            return pdf_output.getvalue()
+
+        except Exception as e:
+            st.error(f"Error in PDF generation: {e}")
+            return None
 
     st.header('Portfolio Optimization')
 
@@ -171,8 +194,8 @@ def app():
                 st.write(f"Sortino Ratio: {sortino_ratio:.4f}")
                 st.write(f"Maximum Drawdown: {max_drawdown:.4f}")
 
-                # Generate report text once and store it in session state
-                text_report = generate_text_report(
+                # Generate PDF report
+                pdf_data = generate_pdf_report(
                     st.session_state.optimized_weights,
                     st.session_state.portfolio_return,
                     st.session_state.portfolio_risk,
@@ -182,16 +205,16 @@ def app():
                     st.session_state.max_drawdown
                 )
 
-                # Store the report in session state
-                st.session_state.text_report = text_report
+                # Store the PDF data in session state
+                st.session_state.pdf_report = pdf_data
 
-            # Display the download button only once the report is generated
-            if 'text_report' in st.session_state:
+            # Display the download button only once the PDF is generated
+            if 'pdf_report' in st.session_state:
                 st.download_button(
-                    label="Download Text Report",
-                    data=st.session_state.text_report,
-                    file_name="portfolio_report.txt",
-                    mime="text/plain"
+                    label="Download PDF Report",
+                    data=st.session_state.pdf_report,
+                    file_name="portfolio_report.pdf",
+                    mime="application/pdf"
                 )
 
 if __name__ == "__main__":
