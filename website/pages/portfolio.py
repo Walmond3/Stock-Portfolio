@@ -170,27 +170,29 @@ def app():
                 st.write(f"Sharpe Ratio: {sharpe_ratio:.4f}")
                 st.write(f"Sortino Ratio: {sortino_ratio:.4f}")
                 st.write(f"Maximum Drawdown: {max_drawdown:.4f}")
-      
-            # Button to download the text report
-            if st.button('Download Text Report'):
-                if 'optimized_weights' in st.session_state:
-                    text_report = generate_text_report(
-                        st.session_state.optimized_weights,
-                        st.session_state.portfolio_return,
-                        st.session_state.portfolio_risk,
-                        st.session_state.portfolio_excess_return,
-                        st.session_state.sharpe_ratio,
-                        st.session_state.sortino_ratio,
-                        st.session_state.max_drawdown
-                    )
 
-                    # Ensure that the text content is passed as a string to the download button
-                    st.download_button(
-                        label="Download Text Report",
-                        data=text_report,
-                        file_name="portfolio_report.txt",
-                        mime="text/plain"
-                    )
+                # Generate report text once and store it in session state
+                text_report = generate_text_report(
+                    st.session_state.optimized_weights,
+                    st.session_state.portfolio_return,
+                    st.session_state.portfolio_risk,
+                    st.session_state.portfolio_excess_return,
+                    st.session_state.sharpe_ratio,
+                    st.session_state.sortino_ratio,
+                    st.session_state.max_drawdown
+                )
+
+                # Store the report in session state
+                st.session_state.text_report = text_report
+
+            # Display the download button only once the report is generated
+            if 'text_report' in st.session_state:
+                st.download_button(
+                    label="Download Text Report",
+                    data=st.session_state.text_report,
+                    file_name="portfolio_report.txt",
+                    mime="text/plain"
+                )
 
 if __name__ == "__main__":
     app()
