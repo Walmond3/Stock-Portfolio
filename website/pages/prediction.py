@@ -35,8 +35,9 @@ def app():
 
       for stock in stocks:
         # Filter data
-        stock_data = data[data['Stock'] == stock][['Open', 'High', 'Low', 'Close', 'Volume']]
-
+        stock_data = data[data['Stock'] == stock]
+        stock_data = stock_data.drop(columns=['Date', 'Stock'])
+        
         # Ensure data has at least 20 rows
         if len(stock_data) < 20:
           st.warning(f"Not enough data for stock {stock}. Skipping.")
