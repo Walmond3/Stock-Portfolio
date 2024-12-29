@@ -152,7 +152,16 @@ def app():
                 optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown = portfolio(
                         df, selected_stocks, expected_returns, risk_free_rate_input, benchmark
                     )
-                
+
+                # Store the results in session state to persist them across interactions
+                st.session_state.optimized_weights = optimal_weights_df
+                st.session_state.portfolio_return = portfolio_return_value
+                st.session_state.portfolio_risk = portfolio_risk_value
+                st.session_state.portfolio_excess_return = portfolio_excess_return
+                st.session_state.sharpe_ratio = sharpe_ratio
+                st.session_state.sortino_ratio = sortino_ratio
+                st.session_state.max_drawdown = max_drawdown
+
                 # Display results
                 st.write("Optimal Weights:", optimal_weights_df)
                 st.write(f"Portfolio Return: {portfolio_return_value:.4f}")
@@ -162,10 +171,19 @@ def app():
                 st.write(f"Sortino Ratio: {sortino_ratio:.4f}")
                 st.write(f"Maximum Drawdown: {max_drawdown:.4f}")
       
-                # Button to download the text report
-                if st.button('Download Text Report'):
-                    text_report = generate_text_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown)
-                    
+            # Button to download the text report
+            if st.button('Download Text Report'):
+                if 'optimized_weights' in st.session_state:
+                    text_report = generate_text_report(
+                        st.session_state.optimized_weights,
+                        st.session_state.portfolio_return,
+                        st.session_state.portfolio_risk,
+                        st.session_state.portfolio_excess_return,
+                        st.session_state.sharpe_ratio,
+                        st.session_state.sortino_ratio,
+                        st.session_state.max_drawdown
+                    )
+
                     # Debugging: Check if the text report is generated correctly
                     st.write("Generated Text Report:", text_report)
 
