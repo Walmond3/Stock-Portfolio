@@ -7,6 +7,8 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 def app():
+
+  # Stock list
   stocks = {"MYEG":"0138.KL",
           "KOSSAN":"7153.KL",
           "PB BANK":"1295.KL",
@@ -135,8 +137,8 @@ def app():
                         template="plotly_dark")
       return fig
 
-  # File uploader widget to upload a CSV file
-  uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+  # Upload the csv file
+  uploaded_file = st.file_uploader("Upload stock data with technical indicators", type="csv")
   
   # If a file is uploaded, read and display it
   if uploaded_file is not None:
