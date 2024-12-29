@@ -45,12 +45,13 @@ if __name__ == "__main__":
     test_sortino = 0.95
     test_drawdown = 0.1
 
-    # Test PDF generation
-    pdf_data = generate_pdf_report(
-        test_weights_df, test_return, test_risk, test_excess_return, test_sharpe, test_sortino, test_drawdown
-    )
-
-    with open("test_report.pdf", "wb") as f:
-        f.write(pdf_data)
-
-    st.write("PDF generated and saved as test_report.pdf")
+    if st.button('Generate PDF'):
+        pdf_data = generate_pdf_report(
+            test_weights_df, test_return, test_risk, test_excess_return, test_sharpe, test_sortino, test_drawdown
+        )
+        st.download_button(
+            label="Download PDF",
+            data=pdf_data,
+            file_name="portfolio_report.pdf",
+            mime="application/pdf"
+        )
