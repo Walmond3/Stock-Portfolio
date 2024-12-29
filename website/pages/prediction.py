@@ -5,7 +5,7 @@ from tensorflow.keras.models import load_model
 from sklearn.preprocessing import StandardScaler
 
 def app():
-  model - load_model('lstm_model.keras')
+  model = load_model('lstm_model.keras')
 
   def create_sequences(data, time_step):
     X = []
