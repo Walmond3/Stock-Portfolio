@@ -128,7 +128,7 @@ def app():
     pdf_output.seek(0)
 
     # Debugging: Print the size of the generated PDF data
-    print("Generated PDF Data Length:", len(pdf_output.getvalue()))  # Should be > 0 if PDF is generated correctly
+    st.write("Generated PDF Data Length:", len(pdf_output.getvalue()))  # Should be > 0 if PDF is generated correctly
     
     return pdf_output.getvalue()
     
@@ -185,8 +185,8 @@ def app():
       # Button to download the PDF report
       if st.button('Download PDF Report'):
           pdf_data = generate_pdf_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown)
-          print("First 100 bytes of PDF content:", pdf_data[:100])
-          print("no data")
+          st.write("First 100 bytes of PDF content:", pdf_data[:100])
+          st.write("no data")
           st.download_button("Download PDF", pdf_data, file_name="portfolio_report.pdf", mime="application/pdf")
     
   
