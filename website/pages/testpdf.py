@@ -52,4 +52,4 @@ if __name__ == "__main__":
     with open("test_report.pdf", "wb") as f:
         f.write(pdf_data)
 
-    print("PDF generated and saved as test_report.pdf")
+    st.write("PDF generated and saved as test_report.pdf")
