@@ -165,6 +165,11 @@ def app():
                 # Button to download the text report
                 if st.button('Download Text Report'):
                     text_report = generate_text_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown)
+                    
+                    # Debugging: Check if the text report is generated correctly
+                    st.write("Generated Text Report:", text_report)
+
+                    # Ensure that the text content is passed as a string to the download button
                     st.download_button(
                         label="Download Text Report",
                         data=text_report,
