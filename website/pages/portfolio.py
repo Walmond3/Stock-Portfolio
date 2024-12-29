@@ -20,12 +20,13 @@ def app():
         cov_estimator = EmpiricalCovariance().fit(monthly_returns)
         Sigma = cov_estimator.covariance_
       
-        # User-provided expected returns
+        # Expected return
         mu = np.array([expected_returns[stock] for stock in selected_stocks])
       
         n_assets = len(mu)
         risk_free_rate = risk_free_rate_input / 3
-      
+
+        # Equal weight benchmark
         if benchmark:
             optimal_weights = np.ones(n_assets) / n_assets
             optimal_weights_df = pd.DataFrame({
@@ -34,8 +35,10 @@ def app():
             })
       
         else:
+            # Maximum weight
             max_weight = 1 / n_assets + 0.2
-      
+
+            # Constraint
             def weight_sum_constraint(w):
                 return np.sum(w) - 1
       
@@ -44,7 +47,8 @@ def app():
       
             def max_weight_constraint(w, max_weight):
                 return max_weight - w
-      
+
+            # Optimization function
             def negative_sharpe_ratio(w, mu, Sigma, risk_free_rate):
                 portfolio_return = np.dot(mu, w)
                 portfolio_volatility = np.sqrt(np.dot(w.T, np.dot(Sigma, w)))
@@ -52,13 +56,15 @@ def app():
                 return -excess_return / portfolio_volatility
       
             initial_guess = np.ones(n_assets)/ n_assets
-      
+
+            # Set up constraints
             constraints = [
                 {'type': 'eq', 'fun': weight_sum_constraint},
                 {'type': 'ineq', 'fun': long_only_constraint},
                 {'type': 'ineq', 'fun': lambda w: max_weight - w}
             ]
-      
+
+            # Store results
             result = minimize(
                 negative_sharpe_ratio,
                 initial_guess,
@@ -68,7 +74,8 @@ def app():
                 bounds=[(0,1) for _ in range(n_assets)],
                 options={'disp': True}
             )
-      
+
+            # Optimal weight calculation
             optimal_weights = result.x
             optimal_weights = np.round(optimal_weights, 2)
             rounding_error = 1- np.sum(optimal_weights)
@@ -78,18 +85,23 @@ def app():
                 'Stock': selected_stocks,
                 'Optimal Weights': optimal_weights
             })
-      
+
+        # Portfolio performance
         portfolio_return_value = np.dot(mu, optimal_weights)
         portfolio_risk_value = np.sqrt(np.dot(optimal_weights.T, np.dot(Sigma, optimal_weights)))
         portfolio_excess_return = portfolio_return_value - risk_free_rate
-      
+
+        # Sharpe ratio calculation
         sharpe_ratio = portfolio_excess_return / portfolio_risk_value
-      
+
+        # Sortino ratio calculation
+        # Return simulation using historical data
         portfolio_returns = np.dot(monthly_returns, optimal_weights)
         negative_returns = portfolio_returns[portfolio_returns < 0]
         downside_risk = np.std(negative_returns)
         sortino_ratio = portfolio_excess_return / downside_risk
-      
+
+        # Max drawdown calculation
         cumulative_returns = np.cumsum(portfolio_returns)
         peaks = np.maximum.accumulate(cumulative_returns)
         drawdowns = (peaks - cumulative_returns) / peaks
@@ -115,7 +127,7 @@ def app():
     st.header('Portfolio Optimization')
 
     # Upload file
-    uploaded_stock_file = st.file_uploader("Upload Stock Data CSV", type=["csv"])
+    uploaded_stock_file = st.file_uploader("Upload covariance matrix data", type=["csv"])
 
     if uploaded_stock_file is not None:
         df = pd.read_csv(uploaded_stock_file)
@@ -137,12 +149,12 @@ def app():
                 user_return = st.number_input(f"Enter expected return for {stock}", min_value=-1.0, max_value=1.0, value=None, format="%.6f")
                 if user_return is not None:
                     expected_returns[stock] = user_return
-                else:
+                else: # Default expected return
                     default_return = 0.05
                     expected_returns[stock] = default_return
       
             # Risk-free rate input
-            risk_free_rate_input = st.number_input("Enter risk-free rate (%)", min_value=0.0, max_value=10.0, value=3.12, format="%.6f") / 100
+            risk_free_rate_input = st.number_input("Enter risk-free rate (%)", min_value=0.0, max_value=10.0, value=3.12, format="%.6f") / 100 # Default = 3.12%
       
             # Option to use benchmark (equal weights)
             benchmark = st.checkbox("Use benchmark (Equal Weights)")
