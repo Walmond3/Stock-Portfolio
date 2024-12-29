@@ -124,11 +124,9 @@ def app():
     pdf.cell(200, 10, txt=f"Maximum Drawdown: {max_drawdown:.4f}", ln=True)
 
     pdf_output = BytesIO()
-    pdf.output(pdf_output)
+    pdf_content = pdf.output(dest='S').encode('latin1')
+    pdf_output.write(pdf_content)
     pdf_output.seek(0)
-
-    # Debugging: Print the size of the generated PDF data
-    st.write("Generated PDF Data Length:", len(pdf_output.getvalue()))  # Should be > 0 if PDF is generated correctly
     
     return pdf_output.getvalue()
     
@@ -185,29 +183,10 @@ def app():
       # Button to download the PDF report
       if st.button('Download PDF Report'):
           pdf_data = generate_pdf_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown)
-          if pdf_data:
-            st.write("PDF generated successfully. Length:", len(pdf_data))
-          else:
-            st.write("PDF generation failed. No data to download.")
           st.download_button("Download PDF", pdf_data, file_name="portfolio_report.pdf", mime="application/pdf")
     
   
 
 if __name__ == "__main__":
-
-  # Dummy data for testing
-  test_weights_df = pd.DataFrame({'Stock': ['AAPL', 'GOOGL'], 'Optimal Weights': [0.6, 0.4]})
-  test_return = 0.08
-  test_risk = 0.15
-  test_excess_return = 0.05
-  test_sharpe = 0.67
-  test_sortino = 0.95
-  test_drawdown = 0.1
-
-  pdf_data = generate_pdf_report(
-      test_weights_df, test_return, test_risk, test_excess_return, test_sharpe, test_sortino, test_drawdown
-  )
-
-  with open("test_report.pdf", "wb") as f:
-      f.write(pdf_data)
+  app()
 
