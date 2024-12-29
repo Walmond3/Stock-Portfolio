@@ -167,7 +167,7 @@ def app():
     # Option to use benchmark (equal weights)
     benchmark = st.checkbox("Use benchmark (Equal Weights)")
   
-    # RUn optimization
+    # Run optimization
     if st.button('Optimize'):
       optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown = portfolio(
               df, selected_stocks, expected_returns, risk_free_rate_input, benchmark
@@ -185,8 +185,10 @@ def app():
       # Button to download the PDF report
       if st.button('Download PDF Report'):
           pdf_data = generate_pdf_report(optimal_weights_df, portfolio_return_value, portfolio_risk_value, portfolio_excess_return, sharpe_ratio, sortino_ratio, max_drawdown)
-          st.write("First 100 bytes of PDF content:", pdf_data[:100])
-          st.write("no data")
+          if pdf_data:
+            st.write("PDF generated successfully. Length:", len(pdf_data))
+          else:
+            st.write("PDF generation failed. No data to download.")
           st.download_button("Download PDF", pdf_data, file_name="portfolio_report.pdf", mime="application/pdf")
     
   
