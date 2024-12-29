@@ -184,9 +184,6 @@ def app():
                         st.session_state.max_drawdown
                     )
 
-                    # Debugging: Check if the text report is generated correctly
-                    st.write("Generated Text Report:", text_report)
-
                     # Ensure that the text content is passed as a string to the download button
                     st.download_button(
                         label="Download Text Report",
