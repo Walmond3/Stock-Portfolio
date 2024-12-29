@@ -82,7 +82,7 @@ def app():
   
     portfolio_return_value = np.dot(mu, optimal_weights)
     portfolio_risk_value = np.sqrt(np.dot(optimal_weights.T, np.dot(Sigma, optimal_weights)))
-    portfolio_excess_retun = portfolio_return_value - risk_free_rate
+    portfolio_excess_return = portfolio_return_value - risk_free_rate
   
     sharpe_ratio = portfolio_excess_return / portfolio_risk_value
   
