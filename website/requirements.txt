@@ -3,4 +3,4 @@ plotly
 pandas
 requests
 tensorflow
-sklearn
+scikit-learn
