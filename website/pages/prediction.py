@@ -5,6 +5,7 @@ from tensorflow.keras.models import load_model
 from sklearn.preprocessing import StandardScaler
 
 def app():
+  # Load model
   model = load_model('website/lstm_model.keras')
 
   def create_sequences(data, time_step):
@@ -15,12 +16,12 @@ def app():
     return np.array(X)
     
   st.header('Stock Future Return Prediction')
-  st.write('Upload a CSV file containing OHLCV data for multiple stocks. The app will predict the future return for each stock, rank them in descending order, and allow you to download the results.')
 
   # File uploader
-  uploaded_file = st.file_uploader("Upload a CSV file", type=['csv'])
+  uploaded_file = st.file_uploader("Upload stock data for prediction", type=['csv'])
 
   if uploaded_file is not None:
+    # Read file
     data = pd.read_csv(uploaded_file, header=[0])
     
     stocks = data['Stock'].unique()
@@ -44,9 +45,12 @@ def app():
       scaled_features = scaler.fit_transform(stock_data)
       y_scaled = scaler.fit_transform(y.values.reshape(-1,1))
 
+      # Create sequence
       sequence = create_sequences(scaled_features, time_step=20)
       sequence = sequence[-1]
       sequence = sequence.reshape(1, sequence.shape[0], sequence.shape[1])
+
+      # Prediction
       predicted_return = model.predict(sequence)
       predicted_return = scaler.inverse_transform(predicted_return)
 
@@ -56,6 +60,7 @@ def app():
         'Predicted Future Return': predicted_return[0][0]
       })
 
+    # Convert to dataframe
     prediction_df = pd.DataFrame(predictions)
 
     if not prediction_df.empty:
