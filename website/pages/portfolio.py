@@ -50,7 +50,7 @@ def app():
         portfolio_return = np.dot(mu, w)
         portfolio_volatility = np.sqrt(np.dot(w.T, np.dot(Sigma, w)))
         excess_return = portfolio_return - risk_free_rate
-        return -excess_retun / portfolio_volatility
+        return -excess_return / portfolio_volatility
   
       initial_guess = np.ones(n_assets)/ n_assets
   
