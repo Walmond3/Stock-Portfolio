@@ -194,4 +194,20 @@ def app():
   
 
 if __name__ == "__main__":
-  app()
+
+  # Dummy data for testing
+  test_weights_df = pd.DataFrame({'Stock': ['AAPL', 'GOOGL'], 'Optimal Weights': [0.6, 0.4]})
+  test_return = 0.08
+  test_risk = 0.15
+  test_excess_return = 0.05
+  test_sharpe = 0.67
+  test_sortino = 0.95
+  test_drawdown = 0.1
+
+  pdf_data = generate_pdf_report(
+      test_weights_df, test_return, test_risk, test_excess_return, test_sharpe, test_sortino, test_drawdown
+  )
+
+  with open("test_report.pdf", "wb") as f:
+      f.write(pdf_data)
+
