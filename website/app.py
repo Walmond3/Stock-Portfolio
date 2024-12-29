@@ -3,6 +3,7 @@ import pandas as pd
 
 st.title('Stock Visionary')
 
+# Stock list
 data = {
         "Ticker": [
             "0138.KL",
@@ -50,6 +51,7 @@ data = {
         ],
     }
 
+# Indicator list
 indicators = {
         "Category": ['Volume', 'Volatility', 'Statistics', 'Overlap', 'Momentum', 'Return', 'Trend', 'Performance'],
         "Indicator": [['On-Balance Volume', 'Accumulation/Distribution Index'],
@@ -78,6 +80,7 @@ st.write(
         Explore the list of stocks below to get started.
         '''
 )
+
 # Display the table
 st.write("### List of Stocks")
 st.dataframe(stock_table, use_container_width=True)
