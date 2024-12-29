@@ -49,6 +49,7 @@ def app():
 
         sequence = create_sequences(scaled_features, time_step=20)
         st.write(f"{sequence.shape}")
+        st.wirte(f"{sequence[-1].shape}")
         sequence = sequence.reshape(1, sequence.shape[1], sequence.shape[2])
         predicted_return = model.predict(sequence)
         predicted_return = scaler.inverse_transform(predicted_return)
