@@ -205,11 +205,12 @@ def app():
                     st.session_state.max_drawdown
                 )
 
-                # Store the PDF data in session state
-                st.session_state.pdf_report = pdf_data
+                if pdf_data:
+                    # Store the PDF data in session state
+                    st.session_state.pdf_report = pdf_data
 
             # Display the download button only once the PDF is generated
-            if 'pdf_report' in st.session_state:
+            if 'pdf_report' in st.session_state and st.session_state.pdf_report:
                 st.download_button(
                     label="Download PDF Report",
                     data=st.session_state.pdf_report,
