@@ -150,7 +150,7 @@ def app():
       # Input expected return
       expected_returns = {}
       for stock in selected_stocks:
-        user_return = st.number_input(f"Enter expected return for {stock}", min_value=-1.0, max_value=1.0, value=None)
+        user_return = st.number_input(f"Enter expected return for {stock}", min_value=-1.0, max_value=1.0, value=None, format="%.6f")
         if user_return is not None:
           expected_returns[stock] = user_return
         else:
@@ -158,7 +158,7 @@ def app():
           expected_returns[stock] = default_return
   
     # Risk-free rate inpuy
-    risk_free_rate_input = st.number_input("Enter risk-free rate (%)", min_value=0.0, max_value=10.0, value=3.12) / 100
+    risk_free_rate_input = st.number_input("Enter risk-free rate (%)", min_value=0.0, max_value=10.0, value=3.12, format="%.6f") / 100
   
     # Option to use benchmark (equal weights)
     benchmark = st.checkbox("Use benchmark (Equal Weights}")
