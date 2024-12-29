@@ -14,7 +14,7 @@ def app():
       X.append(seq)
     return np.array(X)
     
-  st.header('Stock Future Return Prediction Prediction')
+  st.header('Stock Future Return Prediction')
   st.write('Upload a CSV file containing OHLCV data for multiple stocks. The app will predict the future return for each stock, rank them in descending order, and allow you to download the results.')
 
   # File uploader
