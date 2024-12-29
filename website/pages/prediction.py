@@ -45,12 +45,10 @@ def app():
 
         # Normalized the features
         scaled_features = scaler.fit_transform(stock_data)
-        st.write(f"{scaled_features.shape}")
 
         sequence = create_sequences(scaled_features, time_step=20)
-        st.write(f"{sequence.shape}")
-        st.write(f"{sequence[-1].shape}")
-        sequence = sequence.reshape(1, sequence.shape[1], sequence.shape[2])
+        sequence = sequence[-1]
+        sequence = sequence.reshape(1, sequence.shape[0], sequence.shape[1])
         predicted_return = model.predict(sequence)
         predicted_return = scaler.inverse_transform(predicted_return)
 
