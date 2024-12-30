@@ -147,7 +147,7 @@ def app():
   )
   
   # Upload the csv file
-  uploaded_file = st.file_uploader("Upload stock data with technical indicators", type="csv")
+  uploaded_file = st.file_uploader("### Upload stock data with technical indicators", type="csv")
   
   # If a file is uploaded, read and display it
   if uploaded_file is not None:
