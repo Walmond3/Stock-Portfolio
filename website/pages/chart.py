@@ -137,6 +137,15 @@ def app():
                         template="plotly_dark")
       return fig
 
+  # Add a link to the sample file
+  st.markdown(
+      """
+      ### Sample File
+      You can download a [sample CSV file](https://365umedumy-my.sharepoint.com/:x:/g/personal/22004790_siswa365_um_edu_my/EeBjRENzG3JLucczMC6xG9oB1Kc0igscNQA7RynaETDjGg?e=Xixagg) to understand the expected format.
+      """,
+      unsafe_allow_html=True,
+  )
+  
   # Upload the csv file
   uploaded_file = st.file_uploader("Upload stock data with technical indicators", type="csv")
   
