@@ -15,8 +15,17 @@ def app():
       X.append(seq)
     return np.array(X)
     
-  st.header('Stock Future Return Prediction')
-
+  st.title('Stock Future Return Prediction')
+  
+  # Add a link to the sample file
+  st.markdown(
+      """
+      ### Sample File
+      You can download a [sample CSV file](https://365umedumy-my.sharepoint.com/:x:/g/personal/22004790_siswa365_um_edu_my/EU3h9GjCWIlJqtdXBvCDcfEBYC8ZH0iHGgxQ3PteX7t4HQ?e=FSvKee) to understand the expected format.
+      """,
+      unsafe_allow_html=True,
+  )
+  
   # File uploader
   uploaded_file = st.file_uploader("Upload stock data for prediction", type=['csv'])
 
