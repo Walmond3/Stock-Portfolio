@@ -124,8 +124,17 @@ def app():
         report.append(f"Maximum Drawdown: {max_drawdown:.4f}\n")
         return "".join(report)
 
-    st.header('Portfolio Optimization')
+    st.title('Portfolio Optimization')
 
+    # Add a link to the sample file
+    st.markdown(
+        """
+        ### Sample File
+        You can download a [sample CSV file](https://365umedumy-my.sharepoint.com/:x:/g/personal/22004790_siswa365_um_edu_my/EV4Iu8F7G3NEt-h0sq4OirYBrbgRZOTIw4bvkDQYSZTTHA?e=HJPFyO) to understand the expected format.
+        """,
+        unsafe_allow_html=True,
+    )
+    
     # Upload file
     uploaded_stock_file = st.file_uploader("Upload covariance matrix data", type=["csv"])
 
