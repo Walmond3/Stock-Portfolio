@@ -137,6 +137,9 @@ def app():
                         template="plotly_dark")
       return fig
 
+  # Main section for chart display
+  st.title("Stock Chart Visualization")
+  
   # Add a link to the sample file
   st.markdown(
       """
@@ -177,8 +180,6 @@ def app():
           selected_indicator_2 = col4_input.selectbox("Select Indicator", 
                                                       ['Volume Indicators', 'Volatility Indicators', 'RSI', 'Bollinger Bands', 'Average Directional Movement Index', 'Aroon & Aroon Oscillator', 'Overlap Indicators', 'KDJ', 'Moving Average Convergence Divergence'], key="indicator_select_2")  # Add other indicators here
   
-      # Main section for chart display
-      st.title("Stock Chart Visualization")
   
       # Render the first chart (Chart 1)
       fig1 = plot_chart(df, selected_stock_code_1, selected_indicator_1)
