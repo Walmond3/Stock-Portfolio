@@ -9,6 +9,7 @@ import joblib
 def app():
   # Load model
   model = load_model('website/lstm_model.keras')
+  y_sclaer = joblib.load('website/y_scaler.pkl')
 
   def create_sequences(data, time_step):
     X = []
@@ -61,6 +62,7 @@ def app():
 
       # Prediction
       predicted_return = model.predict(sequence)
+      predicted_return = yscaler.inverse_transform(predicted_return)
 
       # Append prediction to list
       predictions.append({
