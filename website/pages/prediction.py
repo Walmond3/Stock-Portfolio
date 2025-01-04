@@ -3,10 +3,13 @@ import pandas as pd
 import numpy as np
 from tensorflow.keras.models import load_model
 from sklearn.preprocessing import StandardScaler
+import joblib
+
 
 def app():
   # Load model
   model = load_model('website/lstm_model.keras')
+  y_scaler = joblib.load('website/y_scaler.pkl')
 
   def create_sequences(data, time_step):
     X = []
@@ -41,8 +44,7 @@ def app():
     for stock in stocks:
       # Filter data
       stock_data = data[data['Stock'] == stock]
-      y = stock_data['Future_Return']
-      stock_data = stock_data.drop(columns=['Date', 'Stock', 'Future_Return'])
+      stock_data = stock_data.drop(columns=['Date', 'Stock'])
       
       # Ensure data has at least 20 rows
       if len(stock_data) < 20:
@@ -52,7 +54,6 @@ def app():
 
       # Normalized the features
       scaled_features = scaler.fit_transform(stock_data)
-      y_scaled = scaler.fit_transform(y.values.reshape(-1,1))
 
       # Create sequence
       sequence = create_sequences(scaled_features, time_step=20)
@@ -61,7 +62,7 @@ def app():
 
       # Prediction
       predicted_return = model.predict(sequence)
-      predicted_return = scaler.inverse_transform(predicted_return)
+      predicted_return = y_scaler.inverse_transform(predicted_return)
 
       # Append prediction to list
       predictions.append({
