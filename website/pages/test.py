@@ -9,7 +9,7 @@ import joblib
 def app():
   # Load model
   model = load_model('website/lstm_model.keras')
-  y_sclaer = joblib.load('website/y_scaler.pkl')
+  y_scaler = joblib.load('website/y_scaler.pkl')
 
   def create_sequences(data, time_step):
     X = []
