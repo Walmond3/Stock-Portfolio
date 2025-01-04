@@ -62,7 +62,7 @@ def app():
 
       # Prediction
       predicted_return = model.predict(sequence)
-      predicted_return = yscaler.inverse_transform(predicted_return)
+      predicted_return = y_scaler.inverse_transform(predicted_return)
 
       # Append prediction to list
       predictions.append({
