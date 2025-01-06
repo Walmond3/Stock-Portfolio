@@ -155,7 +155,7 @@ def app():
             # Input expected return
             expected_returns = {}
             for stock in selected_stocks:
-                user_return = st.number_input(f"Enter expected return for {stock}", min_value=-1.0, max_value=1.0, value=None, format="%.6f")
+                user_return = st.number_input(f"Enter expected return for {stock}", min_value=-1.0, max_value=5.0, value=None, format="%.6f")
                 if user_return is not None:
                     expected_returns[stock] = user_return
                 else: # Default expected return
