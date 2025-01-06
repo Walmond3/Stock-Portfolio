@@ -59,7 +59,7 @@ indicators = {
                       ['Kurtosis', 'Skew', 'Standard Deviation'],
                       ['Exponential Moving Average', 'Simple Moving Average', 'Weighted Moving Average'],
                       ['Relative Strength Index', 'KDJ', 'Moving Average Convergence Divergence'],
-                      ['Lagged Return', 'Daily Return', 'Lagged Return', 'Future Return'],
+                      ['Lagged Return', 'Daily Return', 'Lagged Return', 'Future Return (1 month)'],
                       ['Average Directional Movement Index', 'Aroon & Aroon Oscillator'],
                       ['Draw Down']]    
 }
